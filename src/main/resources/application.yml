@@ -2,8 +2,8 @@ spring:
   application:
     name: sistema-automotivo
   datasource:
-    url: jdbc:mysql://localhost:3306/sistema_automotivo?createDatabaseIfNotExist=true&serverTimezone=UTC
-    username: root
+    url: jdbc:mysql://${DB_HOST:localhost}:${DB_PORT:3306}/${DB_NAME:sistema_automotivo}?createDatabaseIfNotExist=true&serverTimezone=UTC
+    username: ${DB_USERNAME:root}
     password: ${DB_PASSWORD}
   jpa:
     hibernate:

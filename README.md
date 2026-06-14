@@ -75,8 +75,17 @@ Crie o banco (ou deixe a aplicação criar, graças a `createDatabaseIfNotExist=
 CREATE DATABASE IF NOT EXISTS sistema_automotivo;
 ```
 
-Credenciais padrão em `application.yml`: usuário `root`, senha `root`. Para usar outra
-senha, defina a variável de ambiente `DB_PASSWORD`.
+**Credenciais (via `.env`, fora do versionamento):** as credenciais do banco não são
+versionadas. Copie o arquivo de exemplo e ajuste com a sua senha:
+
+```bash
+cp .env.example .env
+# edite o .env e defina DB_PASSWORD (e usuário, se diferente de root)
+```
+
+O `.env` é carregado automaticamente na inicialização (via `spring-dotenv`). Variáveis
+disponíveis: `DB_HOST`, `DB_PORT`, `DB_NAME`, `DB_USERNAME`, `DB_PASSWORD`. Em produção,
+prefira definir essas variáveis no ambiente em vez de usar um arquivo `.env`.
 
 O **Flyway** cria o schema e insere dados de exemplo automaticamente na primeira execução
 (`src/main/resources/db/migration`).

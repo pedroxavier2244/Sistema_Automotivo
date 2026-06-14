@@ -4,6 +4,9 @@ target/
 
 ### Enunciado do trabalho (não versionar) ###
 TRABALHO - Object Oriented Programming.docx.pdf
+
+### Variáveis de ambiente / credenciais (não versionar) ###
+.env
 .mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
