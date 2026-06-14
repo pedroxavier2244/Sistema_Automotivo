@@ -104,6 +104,13 @@ class VeiculoSpecificationTest {
     }
 
     @Test
+    void tipoInvalidoLancaBusinessException() {
+        org.assertj.core.api.Assertions.assertThatThrownBy(() ->
+                        VeiculoSpecifications.comFiltros(null, null, null, null, null, null, "aviao"))
+                .isInstanceOf(com.unifecaf.sistemaautomotivo.exception.BusinessException.class);
+    }
+
+    @Test
     void combinaFiltros() {
         List<Veiculo> r = repository.findAll(VeiculoSpecifications.comFiltros(
                 null, null, null, new BigDecimal("200000"), null,

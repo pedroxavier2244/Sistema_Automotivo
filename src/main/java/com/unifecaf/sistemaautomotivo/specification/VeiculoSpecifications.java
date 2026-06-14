@@ -7,6 +7,7 @@ import com.unifecaf.sistemaautomotivo.domain.Modelo;
 import com.unifecaf.sistemaautomotivo.domain.Moto;
 import com.unifecaf.sistemaautomotivo.domain.StatusVeiculo;
 import com.unifecaf.sistemaautomotivo.domain.Veiculo;
+import com.unifecaf.sistemaautomotivo.exception.BusinessException;
 import jakarta.persistence.criteria.Join;
 import jakarta.persistence.criteria.Predicate;
 import java.math.BigDecimal;
@@ -30,6 +31,8 @@ public final class VeiculoSpecifications {
     public static Specification<Veiculo> comFiltros(String marca, String modelo,
             BigDecimal precoMin, BigDecimal precoMax, Integer ano,
             StatusVeiculo status, String tipo) {
+
+        Class<? extends Veiculo> classeTipo = resolverTipo(tipo);
 
         return (root, query, cb) -> {
             List<Predicate> predicados = new ArrayList<>();
@@ -59,15 +62,24 @@ public final class VeiculoSpecifications {
             if (status != null) {
                 predicados.add(cb.equal(root.get("status"), status));
             }
-            if (StringUtils.hasText(tipo)) {
-                Class<? extends Veiculo> classe = TIPOS.get(tipo.toUpperCase(Locale.ROOT));
-                if (classe != null) {
-                    predicados.add(cb.equal(root.type(), classe));
-                }
+            if (classeTipo != null) {
+                predicados.add(cb.equal(root.type(), classeTipo));
             }
 
             return cb.and(predicados.toArray(Predicate[]::new));
         };
+    }
+
+    private static Class<? extends Veiculo> resolverTipo(String tipo) {
+        if (!StringUtils.hasText(tipo)) {
+            return null;
+        }
+        Class<? extends Veiculo> classe = TIPOS.get(tipo.toUpperCase(Locale.ROOT));
+        if (classe == null) {
+            throw new BusinessException("Tipo de veículo inválido: '" + tipo
+                    + "'. Valores aceitos: CARRO, MOTO, CAMINHAO.");
+        }
+        return classe;
     }
 
     private static String contains(String valor) {

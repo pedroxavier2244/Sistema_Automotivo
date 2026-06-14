@@ -2,6 +2,7 @@ package com.unifecaf.sistemaautomotivo.exception;
 
 import jakarta.servlet.http.HttpServletRequest;
 import java.util.List;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -36,6 +37,13 @@ public class GlobalExceptionHandler {
                 "Há campos inválidos na requisição.",
                 req.getRequestURI(), campos);
         return ResponseEntity.badRequest().body(corpo);
+    }
+
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<ApiError> handleIntegridade(DataIntegrityViolationException ex,
+            HttpServletRequest req) {
+        return build(HttpStatus.CONFLICT,
+                "Operação viola uma restrição de integridade dos dados.", req);
     }
 
     @ExceptionHandler(HttpMessageNotReadableException.class)

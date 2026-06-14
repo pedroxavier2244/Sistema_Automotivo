@@ -34,3 +34,9 @@ INSERT INTO moto (id, cilindrada) VALUES
 
 INSERT INTO caminhao (id, capacidade_carga_kg, numero_eixos) VALUES
     (4, 25000.00, 3);
+
+-- Avança os contadores AUTO_INCREMENT para além dos IDs inseridos manualmente,
+-- garantindo que o próximo cadastro via API não colida com os dados de exemplo.
+ALTER TABLE marca   AUTO_INCREMENT = 4;
+ALTER TABLE modelo  AUTO_INCREMENT = 6;
+ALTER TABLE veiculo AUTO_INCREMENT = 6;
