@@ -1,10 +1,3 @@
--- =====================================================================
--- Sistema Automotivo - Modelo físico (MySQL 8)
--- Hierarquia de veículos mapeada por herança JPA JOINED:
---   veiculo (base)  ──<  carro | moto | caminhao  (PK = FK -> veiculo.id)
---   marca (1) ──< modelo (N) ──< veiculo (N)
--- =====================================================================
-
 CREATE TABLE marca (
     id   BIGINT       NOT NULL AUTO_INCREMENT,
     nome VARCHAR(80)  NOT NULL,
@@ -55,7 +48,6 @@ CREATE TABLE caminhao (
     CONSTRAINT fk_caminhao_veiculo FOREIGN KEY (id) REFERENCES veiculo (id)
 ) ENGINE = InnoDB;
 
--- Índices para os filtros e consultas mais frequentes (requisito de performance).
 CREATE INDEX idx_modelo_marca   ON modelo (marca_id);
 CREATE INDEX idx_veiculo_modelo ON veiculo (modelo_id);
 CREATE INDEX idx_veiculo_status ON veiculo (status);
