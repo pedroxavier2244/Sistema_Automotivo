@@ -7,6 +7,9 @@ TRABALHO - Object Oriented Programming.docx.pdf
 
 ### Variáveis de ambiente / credenciais (não versionar) ###
 .env
+
+### Documentação interna / relatórios (não versionar) ###
+docs/
 .mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
