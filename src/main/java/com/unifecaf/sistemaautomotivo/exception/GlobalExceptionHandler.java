@@ -4,6 +4,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -35,6 +36,13 @@ public class GlobalExceptionHandler {
                 "Há campos inválidos na requisição.",
                 req.getRequestURI(), campos);
         return ResponseEntity.badRequest().body(corpo);
+    }
+
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity<ApiError> handleCorpoIlegivel(HttpMessageNotReadableException ex,
+            HttpServletRequest req) {
+        return build(HttpStatus.BAD_REQUEST,
+                "Corpo da requisição inválido ou malformado.", req);
     }
 
     @ExceptionHandler(Exception.class)
