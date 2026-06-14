@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: sistema-automotivo
+  datasource:
+    url: jdbc:mysql://localhost:3306/sistema_automotivo?createDatabaseIfNotExist=true&serverTimezone=UTC
+    username: root
+    password: ${DB_PASSWORD}
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+    properties:
+      hibernate:
+        format_sql: true
+  flyway:
+    enabled: true
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
